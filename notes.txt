@@ -1,0 +1,32 @@
+GUI - java swing. use netbeans for IDE - payas said easiest way
+error checking functionality - after they add in details, ask them if this is what they want.
+
+assume that they can give you anything. 
+
+focus on sanity. 
+
+PilotID can do either. we increment our own and return it. or make them enter it. maybe return options.
+
+sql injections
+
+
+'select * from plane where sdfjaks <' + "<<user input>>"
+
+what if its ";drop table plane;" - can use libraries, might not even need that. sql injection sanitizer
+
+i do book flight, list number seats, number repairs, number passangers. 
+
+confirmed already happened. reserved is upcoming **
+
+use indexes for sorting info. 
+
+change startPostgreSQL.sh script to add path before initdb:
+	PATH=$PATH:/usr/lib/postgresql/10/bin/
+	EXPORT PATH
+
+has 2 or 3 indexes and explain performance boosts. there should be some way to improve performance.
+
+
+DOCUMENTATION:
+- assume only 1 flight number so we assume we use departure time fron flight table only.
+- assume we list count first since they're sorted by count

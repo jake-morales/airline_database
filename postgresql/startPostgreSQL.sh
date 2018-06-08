@@ -16,7 +16,9 @@ mkdir $folder/myDB/sockets
 sleep 1
 #cp ../data/*.csv $folder/myDB/data
 
-#Initialize DB
+#Initialize DB -- changed path 
+PATH=$PATH:/usr/lib/postgresql/10/bin/
+EXPORT PATH
 initdb
 
 sleep 1

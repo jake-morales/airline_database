@@ -19,6 +19,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -212,13 +213,19 @@ public class DBproject{
 	 * @param args the command line arguments this inclues the <mysql|pgsql> <login file>
 	 */
 	public static void main (String[] args) {
+		System.out.println("got where far");
 		if (args.length != 3) {
 			System.err.println (
 				"Usage: " + "java [-classpath <classpath>] " + DBproject.class.getName () +
 		            " <dbname> <port> <user>");
 			return;
 		}//end if
+		System.out.println("got out far");
 		
+		airlineUI dbUI = new airlineUI();
+		dbUI.setVisible(true);
+		System.out.println("got way far");
+
 		DBproject esql = null;
 		
 		try{
@@ -299,7 +306,24 @@ public class DBproject{
 		return input;
 	}//end readChoice
 
-	public static void AddPlane(DBproject esql) {//1
+	public static void AddPlane(DBproject esql) throws IOException {//1
+		try{
+			String input = new String("INSERT INTO plane(id, make, model, age, seats) VALUES (");
+			System.out.print("Enter a plane id: ");
+			input += in.readLine() + ", ";
+			System.out.print("Enter a make: ");
+			input += in.readLine() + ", ";
+			System.out.print("Enter a model: ");
+			input += in.readLine() + ", ";
+			System.out.print("Enter age: ");
+			input += in.readLine() + ", ";
+			System.out.print("Enter number of seats: ");
+			input += in.readLine() + ");";
+			esql.executeQueryAndPrintResult(input);
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+		}		
 	}
 
 	public static void AddPilot(DBproject esql) {//2
@@ -320,12 +344,16 @@ public class DBproject{
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
 	}
 
-	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {//7
+	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) throws SQLException {//7
 		// Count number of repairs per planes and list them in descending order
+		String query = "SELECT count(*) as \"# Repairs\", plane_id as \"Plane ID#\" FROM repairs group by \"Plane ID#\" ORDER BY \"# Repairs\" DESC";
+		esql.executeQueryAndPrintResult(query);
 	}
 
-	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) {//8
+	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) throws SQLException {//8
 		// Count repairs per year and list them in ascending order
+		String query = "SELECT count(*) as \"# Repairs\", extract(year from repair_date) as \"Year\" FROM repairs GROUP BY \"Year\" ORDER BY \"# Repairs\" ASC;";
+		esql.executeQueryAndPrintResult(query);
 	}
 	
 	public static void FindPassengersCountWithStatus(DBproject esql) {//9
