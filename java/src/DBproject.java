@@ -24,6 +24,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.io.IOException;
+
 /**
  * This class defines a simple embedded SQL utility class that is designed to
  * work with PostgreSQL JDBC drivers.
@@ -299,41 +301,105 @@ public class DBproject{
 		return input;
 	}//end readChoice
 
-	public static void AddPlane(DBproject esql) {//1
+	public static void AddPlane(DBproject esql) throws SQLException, IOException{//1
+		String[] prompt = new String[]{"Enter plane id: ", "make: ", "model: ", "age: ", "seats: "};
+		String[] input = new String[prompt.length];
+		for (int i = 0; i < prompt.length; i++){
+			System.out.print(prompt[i]);
+			input[i] = in.readLine();
+		}
+
+		String query = "INSERT INTO plane(id, make, model, age, seats) VALUES (" + input[0] + ", "
+																					+ "'" + input[1] + "', "
+																					+ "'" + input[2] + "', "
+																					+ "'" + input[3] + "', "
+																					+ input[4] + ");";
+		esql.executeUpdate(query);
+		System.out.println("Success...!");
 	}
 
-	public static void AddPilot(DBproject esql) {//2
+	public static void AddPilot(DBproject esql) throws SQLException, IOException{//2
+		String[] prompt = new String[]{"Enter pilot id: ", "fullname: ", "nationality: "};
+		String[] input = new String[prompt.length];
+		for (int i = 0; i < prompt.length; i++){
+			System.out.print(prompt[i]);
+			input[i] = in.readLine();
+		}
+
+		String query = "INSERT INTO pilot(id, fullname, nationality) VALUES (" + input[0] + ", "
+																					+ "'" + input[1] + "', "
+																					+ "'" + input[2] + "');";
+		esql.executeUpdate(query);
+		System.out.println("Success...!");
 	}
 
-	public static void AddFlight(DBproject esql) {//3
-		// Given a pilot, plane and flight, adds a flight in the DB
+	public static void AddFlight(DBproject esql) throws SQLException, IOException {//3
+		// Given a pilot, plane and flight, adds a flight in the DB -- details of fligth also?
+		String[] prompt = new String[]{"Enter fiid: ", "flight_id: ", "pilot_id: ", "plane_id: "};
+		String[] input = new String[prompt.length];
+		for (int i = 0; i < prompt.length; i++){
+			System.out.print(prompt[i]);
+			input[i] = in.readLine();
+		}
+
+		String query = "INSERT INTO FlightInfo(fiid, flight_id, pilot_id, plane_id) VALUES (" + input[0] + ", "
+																					+ input[1] + ", "
+																					+ input[2] + ", "
+																					+ input[3] + ");";
+		esql.executeUpdate(query);
+		System.out.println("Success...!");
 	}
 
-	public static void AddTechnician(DBproject esql) {//4
+	public static void AddTechnician(DBproject esql) throws SQLException,IOException{//4
+		String[] prompt = new String[]{"Enter technician id: ", "full_name: "};
+		String[] input = new String[prompt.length];
+		for (int i = 0; i < prompt.length; i++){
+			System.out.print(prompt[i]);
+			input[i] = in.readLine();
+		}
+
+		String query = "INSERT INTO technician(id, full_name) VALUES (" + input[0] + ", " + "'" + input[1] + "');";
+		esql.executeUpdate(query);
+		System.out.println("Success...!");
 	}
 
-	public static void BookFlight(DBproject esql) {//5
+	public static void BookFlight(DBproject esql) throws SQLException, IOException{//5
 		// Given a customer and a flight that he/she wants to book, add a reservation to the DB
+		System.out.println("Enter a customer ");
+		//Finish
 	}
 
-	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
+	public static void ListNumberOfAvailableSeats(DBproject esql) throws SQLException, IOException{//6
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
+		System.out.print("Enter a flight number: ");
+		String fnum = in.readLine();
+		System.out.print("Enter a departure date");
+		String date = in.readLine();
+
+		String query = "SELECT P.seats - F.num_sold FROM Flight F, FlightInfo FI, Plane P WHERE (F.fnum = FI.flight_id) AND (FI.plane_id = P.id) AND fnum = " + fnum + ";";
+		esql.executeQueryAndPrintResult(query);
 	}
 
-	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {//7
+	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) throws SQLException {//7
 		// Count number of repairs per planes and list them in descending order
 		String query = "SELECT count(*) as \"# Repairs\", plane_id as \"Plane ID#\" FROM repairs group by \"Plane ID#\" ORDER BY \"# Repairs\" DESC";
 		esql.executeQueryAndPrintResult(query);
 	}
 
-	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) {//8
+	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) throws SQLException{//8
 		// Count repairs per year and list them in ascending order
 		String query = "SELECT count(*) as \"# Repairs\", extract(year from repair_date) as \"Year\" FROM repairs GROUP BY \"Year\" ORDER BY \"# Repairs\" ASC;";
 		esql.executeQueryAndPrintResult(query);
 	}
-	}
 	
-	public static void FindPassengersCountWithStatus(DBproject esql) {//9
+	public static void FindPassengersCountWithStatus(DBproject esql) throws SQLException, IOException{//9
 		// Find how many passengers there are with a status (i.e. W,C,R) and list that number.
+		System.out.print("Enter a flight number: ");
+		String fnum = in.readLine();
+		System.out.print("Enter a status(R, W, C): ");
+		String status = in.readLine();
+		//error check later
+		String query = "SELECT count(*) as \"# Customers with Status\" FROM reservation R WHERE R.fid = " + fnum + " AND R.status = \'" + status + "\';";
+		esql.executeQueryAndPrintResult(query);
 	}
 }

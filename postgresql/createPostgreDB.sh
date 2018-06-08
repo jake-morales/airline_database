@@ -10,3 +10,5 @@ cp ../data/*.csv /tmp/$USER/myDB/data/.
 echo "Initializing tables .. "
 sleep 1
 psql -h localhost -p $PGPORT $USER"_DB" < ../sql/create.sql
+
+export DB=$USER"_DB"
