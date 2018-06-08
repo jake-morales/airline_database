@@ -30,7 +30,7 @@ public class airlineUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         System.out.println("got this far");
-        //jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("../src/background.jpg"))); // NOI18N
+        //jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("./src/background.jpg"))); // NOI18N
         System.out.println("got that far");
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
