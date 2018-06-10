@@ -333,36 +333,6 @@ public class DBproject{
 		System.out.println("Success...!");
 	}
 
-	public static void AddFlight(DBproject esql) throws SQLException, IOException {//3
-		// Given a pilot, plane and flight, adds a flight in the DB -- details of fligth also?
-		String[] prompt = new String[]{"Enter fiid: ", "flight_id: ", "pilot_id: ", "plane_id: "};
-		String[] input = new String[prompt.length];
-		for (int i = 0; i < prompt.length; i++){
-			System.out.print(prompt[i]);
-			input[i] = in.readLine();
-		}
-
-		String query = "INSERT INTO FlightInfo(fiid, flight_id, pilot_id, plane_id) VALUES (" + input[0] + ", "
-																					+ input[1] + ", "
-																					+ input[2] + ", "
-																					+ input[3] + ");";
-		esql.executeUpdate(query);
-		System.out.println("Success...!");
-	}
-
-	public static void AddTechnician(DBproject esql) throws SQLException,IOException{//4
-		String[] prompt = new String[]{"Enter technician id: ", "full_name: "};
-		String[] input = new String[prompt.length];
-		for (int i = 0; i < prompt.length; i++){
-			System.out.print(prompt[i]);
-			input[i] = in.readLine();
-		}
-
-		String query = "INSERT INTO technician(id, full_name) VALUES (" + input[0] + ", " + "'" + input[1] + "');";
-		esql.executeUpdate(query);
-		System.out.println("Success...!");
-	}
-
 	public static void BookFlight(DBproject esql) throws SQLException, IOException{//5
 		List<List<String>> result  = new ArrayList<List<String>>(); //container for returned info
 		List<List<String>> customerCheck = new ArrayList<List<String>>();
@@ -441,7 +411,14 @@ public class DBproject{
 			String addReservation = "INSERT INTO Reservation(rnum, cid, fid, status) VALUES (" + reservationNum.get(0).get(0) + ", " + custID + ", " + fnum + ","+"'R');";
 			esql.executeUpdate(addReservation);
 
-			//update num sold in Flight
+			List<List<String>> numSold = esql.executeQueryAndReturnResult("select num_sold from Flight F where F.fnum = " + fnum + ";");
+			int numSoldInt = Integer.parseInt(numSold.get(0).get(0));
+			numSoldInt++;
+			System.out.println(numSoldInt);
+			
+			esql.executeUpdate("UPDATE flight SET num_sold = " + numSoldInt + " WHERE fnum = " + fnum + ";");
+			
+			System.out.println("Success! Your travel arrangements are confirmed");
 		}
 	}
 
