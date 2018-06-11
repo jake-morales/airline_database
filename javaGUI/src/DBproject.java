@@ -309,15 +309,14 @@ public class DBproject{
 			input[i] = in.readLine();
 		}
 
-	public static String AddPlane(String[] input) {//1
 		String query = "INSERT INTO plane(id, make, model, age, seats) VALUES (" + input[0] + ", "
-																				+ "'" + input[1] + "', "
-																				+ "'" + input[2] + "', "
-																				+ "'" + input[3] + "', "
-																				+ input[4] + ");";
-		try{
-			esql.executeUpdate(query);
-			return new String("Success...!");
+																					+ "'" + input[1] + "', "
+																					+ "'" + input[2] + "', "
+																					+ "'" + input[3] + "', "
+																					+ input[4] + ");";
+		esql.executeUpdate(query);
+		System.out.println("Success...!");
+	}
 
 	public static void AddPilot(DBproject esql) throws SQLException, IOException{//2
 		String[] prompt = new String[]{"Enter pilot id: ", "fullname: ", "nationality: "};
@@ -506,15 +505,31 @@ public class DBproject{
 		// Find how many passengers there are with a status (i.e. W,C,R) and list that number.
 		System.out.print("Enter a flight number: ");
 		String fnum = in.readLine();
+		List<List<String>> flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
+		int flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
+		
+		//make sure flight number exists
+		while(flyCheck == 0){
+			System.out.print("Sorry, that flight cannot be found. Please enter a valid flight number: ");
+			fnum = in.readLine();
+			flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
+			
+			flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
+			//System.out.println(flyCheck);
+		}
 		System.out.print("Enter a status(R, W, C): ");
 		String status = in.readLine();
-		/*String Tem = status.toUpperCase();
-		while ( !status.equals("W") & !status.equals("R") & !status.equals("C")){
+		
+		//check to see if status valid
+		String temp = status.toUpperCase();
+		while ( !temp.equals("W") & !temp.equals("R") & !temp.equals("C")){
 			System.out.print("Invalid status entered. Enter a  valid status(R, W, C): ");
-			status = in.readLine();
-		}*/
+			temp = in.readLine();
+			temp = temp.toUpperCase();
+		}
 		String query = "SELECT count(*) as \"# Customers with Status\" FROM reservation R WHERE R.fid = " + fnum + " AND R.status = \'" + status.toUpperCase() + "\';";
 		result = esql.executeQueryAndReturnResult(query);
+		
 		return result;
 	}
 }

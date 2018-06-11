@@ -333,6 +333,36 @@ public class DBproject{
 		System.out.println("Success...!");
 	}
 
+	public static void AddFlight(DBproject esql) throws SQLException, IOException {//3
+		// Given a pilot, plane and flight, adds a flight in the DB -- details of fligth also?
+		String[] prompt = new String[]{"Enter fiid: ", "flight_id: ", "pilot_id: ", "plane_id: "};
+		String[] input = new String[prompt.length];
+		for (int i = 0; i < prompt.length; i++){
+			System.out.print(prompt[i]);
+			input[i] = in.readLine();
+		}
+
+		String query = "INSERT INTO FlightInfo(fiid, flight_id, pilot_id, plane_id) VALUES (" + input[0] + ", "
+																					+ input[1] + ", "
+																					+ input[2] + ", "
+																					+ input[3] + ");";
+		esql.executeUpdate(query);
+		System.out.println("Success...!");
+	}
+
+	public static void AddTechnician(DBproject esql) throws SQLException,IOException{//4
+		String[] prompt = new String[]{"Enter technician id: ", "full_name: "};
+		String[] input = new String[prompt.length];
+		for (int i = 0; i < prompt.length; i++){
+			System.out.print(prompt[i]);
+			input[i] = in.readLine();
+		}
+
+		String query = "INSERT INTO technician(id, full_name) VALUES (" + input[0] + ", " + "'" + input[1] + "');";
+		esql.executeUpdate(query);
+		System.out.println("Success...!");
+	}
+
 	public static void BookFlight(DBproject esql) throws SQLException, IOException{//5
 		List<List<String>> result  = new ArrayList<List<String>>(); //container for returned info
 		List<List<String>> customerCheck = new ArrayList<List<String>>();
@@ -422,38 +452,84 @@ public class DBproject{
 		}
 	}
 
-	public static void ListNumberOfAvailableSeats(DBproject esql) throws SQLException, IOException{//6
+	public static List<List<String>> ListNumberOfAvailableSeats(DBproject esql) throws SQLException, IOException{//6
+		List<List<String>> result  = new ArrayList<List<String>>();
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
 		System.out.println("Enter a flight number: ");
 		String fnum = in.readLine();
+		List<List<String>> flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
+		int flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
+		
+		//make sure flight number exists
+		while(flyCheck == 0){
+			System.out.print("Sorry, that flight cannot be found. Please enter a valid flight number: ");
+			fnum = in.readLine();
+			flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
+			
+			flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
+			//System.out.println(flyCheck);
+		}
 		//System.out.print("Enter a departure date");
 		//String date = in.readLine();
 
 		String query = "SELECT P.seats - F.num_sold FROM Flight F, FlightInfo FI, Plane P WHERE (F.fnum = FI.flight_id) AND (FI.plane_id = P.id) AND fnum = " + fnum + ";";
-		System.out.print("Number of remaining seats: ");
-		esql.executeQueryAndPrintResult(query);
+		//System.out.print("Number of remaining seats: ");
+		result = esql.executeQueryAndReturnResult(query);
+		/*for (int i = 0; i < result.size(); i++){
+			for (int j = 0; j < result.get(i).size(); j++){
+				System.out.print(result.get(i).get(j));
+			}
+			System.out.println();
+		}*/
+		return result;
 	}
 
-	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) throws SQLException {//7
+	public static List<List<String>> ListsTotalNumberOfRepairsPerPlane(DBproject esql) throws SQLException {//7
+		List<List<String>> result  = new ArrayList<List<String>>();
 		// Count number of repairs per planes and list them in descending order
 		String query = "SELECT count(*) as \"# Repairs\", plane_id as \"Plane ID#\" FROM repairs group by \"Plane ID#\" ORDER BY \"# Repairs\" DESC";
-		esql.executeQueryAndPrintResult(query);
+		result = esql.executeQueryAndReturnResult(query);
+		return result;
 	}
 
-	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) throws SQLException{//8
+	public static List<List<String>> ListTotalNumberOfRepairsPerYear(DBproject esql) throws SQLException{//8
+		List<List<String>> result  = new ArrayList<List<String>>();
 		// Count repairs per year and list them in ascending order
 		String query = "SELECT count(*) as \"# Repairs\", extract(year from repair_date) as \"Year\" FROM repairs GROUP BY \"Year\" ORDER BY \"# Repairs\" ASC;";
-		esql.executeQueryAndPrintResult(query);
+		result = esql.executeQueryAndReturnResult(query);
+		return result;
 	}
 	
-	public static void FindPassengersCountWithStatus(DBproject esql) throws SQLException, IOException{//9
+	public static List<List<String>> FindPassengersCountWithStatus(DBproject esql) throws SQLException, IOException{//9
+		List<List<String>> result  = new ArrayList<List<String>>();
 		// Find how many passengers there are with a status (i.e. W,C,R) and list that number.
 		System.out.print("Enter a flight number: ");
 		String fnum = in.readLine();
+		List<List<String>> flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
+		int flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
+		
+		//make sure flight number exists
+		while(flyCheck == 0){
+			System.out.print("Sorry, that flight cannot be found. Please enter a valid flight number: ");
+			fnum = in.readLine();
+			flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
+			
+			flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
+			//System.out.println(flyCheck);
+		}
 		System.out.print("Enter a status(R, W, C): ");
 		String status = in.readLine();
-		//error check later
+		
+		//check to see if status valid
+		String temp = status.toUpperCase();
+		while ( !temp.equals("W") & !temp.equals("R") & !temp.equals("C")){
+			System.out.print("Invalid status entered. Enter a  valid status(R, W, C): ");
+			temp = in.readLine();
+			temp = temp.toUpperCase();
+		}
 		String query = "SELECT count(*) as \"# Customers with Status\" FROM reservation R WHERE R.fid = " + fnum + " AND R.status = \'" + status.toUpperCase() + "\';";
-		esql.executeQueryAndPrintResult(query);
+		result = esql.executeQueryAndReturnResult(query);
+		
+		return result;
 	}
 }
