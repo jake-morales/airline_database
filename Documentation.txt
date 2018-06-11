@@ -18,4 +18,3 @@ Project Phase 3
     - This version implements a GUI intrerface.
     - To run: --> cd airline_database/java --> ./compile.sh --> ./run.sh
         -If it doesn't work, try running it manually with: --> java -cp lib/*:bin/ DBproject <DBname> <Port#> <User>
-    - 

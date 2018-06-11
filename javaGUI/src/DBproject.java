@@ -318,181 +318,80 @@ public class DBproject{
 		}
 	}
 
-	public static String BookFlight(String[] input) throws SQLException, IOException {//5
-		/*List<List<String>> result  = new ArrayList<List<String>>(); //container for returned info
-		List<List<String>> customerCheck = new ArrayList<List<String>>();
-		List<List<String>> reservationNum = esql.executeQueryAndReturnResult("select count(*) from Reservation;");
-		int custCheck = 0;
-		int flyCheck = 0;
-		// Given a customer and a flight that he/she wants to book, add a reservation to the DB
-		
-		//Get cust id from user	
-		
-		System.out.print("Enter a customer ID: ");
-		String custID = in.readLine();
-		customerCheck = esql.executeQueryAndReturnResult("select count(*) from Customer C where C.id = " + custID + ";");
-		custCheck = Integer.parseInt(customerCheck.get(0).get(0));
-		
-		//check to see if valid
-		while(custCheck == 0){
-			System.out.print("Sorry, that customer cannot be found. Please enter a valid customer ID: ");
-			custID = in.readLine();
-			customerCheck = esql.executeQueryAndReturnResult("select count(*) from Customer C where C.id = " + custID + ";");
-			custCheck = Integer.parseInt(customerCheck.get(0).get(0));
+	public static String BookFlight(String[] input) {//5
+		String query = "INSERT INTO reservation(rnum, cid, fid) VALUES ( 10, " + input[0] + ", " + "'" + input[1] + "');";
+		try{
+			esql.executeUpdate(query);
+			return "Success...!";
+		}catch(SQLException se){
+			return "Failed.." + se.getMessage();
+		}catch(Exception e){
+			return "Failed.." + e.getMessage();
 		}
-
-		//get flight number 
-		System.out.print("Enter a flight number: ");
-		String fnum = in.readLine();
-		List<List<String>> flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
-		flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
-		
-		//make sure flight number exists
-		while(flyCheck == 0){
-			System.out.print("Sorry, that flight cannot be found. Please enter a valid flight number: ");
-			fnum = in.readLine();
-			flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
-			
-			flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
-			//System.out.println(flyCheck);
-		}
-		String waitlist = "Unfortunately this flight is sold out, would you like to be added to the wait list? (y/n): ";
-		
-		//check to see if valid entries
-		String seatQuery = "SELECT P.seats - F.num_sold FROM Flight F, FlightInfo FI, Plane P WHERE (F.fnum = FI.flight_id) AND (FI.plane_id = P.id) AND fnum = " + fnum + ";";
-		
-		//return # 0f seats on given flight
-		result = esql.executeQueryAndReturnResult(seatQuery);
-		
-		int seatsLeft = Integer.parseInt(result.get(0).get(0));
-		//System.out.println("Remaining seats: " + seatsLeft);
-		
-		//if numseats = 0, add to waitlist
-		if (seatsLeft == 0){
-			System.out.print(waitlist);
-		}
-		while(seatsLeft == 0){
-			String response = in.readLine();
-			String lower = response.toLowerCase();
-			if ( lower.equals("y")){
-				System.out.println("Adding you to the Waitlist!" );
-				//int reserveNum = Integer.parseInt(reservationNum.get(0).get(0));
-				System.out.println(reservationNum.get(0).get(0));
-				String addWaitlist = "INSERT INTO Reservation(rnum, cid, fid, status) VALUES (" + reservationNum.get(0).get(0) + ", " + custID + ", " + fnum + ","+"'W');";
-				esql.executeUpdate(addWaitlist);
-				break;
-			}
-			else if (lower.equals("n")){
-				System.out.println("Thank you for your interest in our airline!" );
-				break;
-			}
-			else{
-				System.out.print("Sorry, response not recognized. Please enter either y or n: " );
-			}
-		}
-		//else if numseats > 0, add to reservation
-		if (seatsLeft > 0){
-			System.out.println("Thank you for choosing our airline, we are booking your flight as we speak!");
-			String addReservation = "INSERT INTO Reservation(rnum, cid, fid, status) VALUES (" + reservationNum.get(0).get(0) + ", " + custID + ", " + fnum + ","+"'R');";
-			esql.executeUpdate(addReservation);
-
-			List<List<String>> numSold = esql.executeQueryAndReturnResult("select num_sold from Flight F where F.fnum = " + fnum + ";");
-			int numSoldInt = Integer.parseInt(numSold.get(0).get(0));
-			numSoldInt++;
-			System.out.println(numSoldInt);
-			
-			esql.executeUpdate("UPDATE flight SET num_sold = " + numSoldInt + " WHERE fnum = " + fnum + ";");
-			
-			System.out.println("Success! Your travel arrangements are confirmed");
-		}*/
-		return "";
 	}
 
-	public static List<List<String>> ListNumberOfAvailableSeats() throws SQLException, IOException{//6
-		/*List<List<String>> result  = new ArrayList<List<String>>();
+	public static List<List<String>> ListNumberOfAvailableSeats() {//6
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
-		System.out.println("Enter a flight number: ");
-		String fnum = in.readLine();
-		List<List<String>> flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
-		int flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
-		
-		//make sure flight number exists
-		while(flyCheck == 0){
-			System.out.print("Sorry, that flight cannot be found. Please enter a valid flight number: ");
-			fnum = in.readLine();
-			flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
-			
-			flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
-			//System.out.println(flyCheck);
+		String query = "SELECT P.seats - F.num_sold FROM Flight F, FlightInfo FI, Plane P WHERE (F.fnum = FI.flight_id) AND (FI.plane_id = P.id) AND fnum = 10;";
+		List<List<String>> result  = new ArrayList<List<String>>();
+		try{
+			result = esql.executeQueryAndReturnResult(query);
+			return result;
+		}catch(SQLException se){
+			System.out.println("Failed.");
+			return result;
+		}catch(Exception e){
+			System.out.println("Failed.");
+			return result;
 		}
-		//System.out.print("Enter a departure date");
-		//String date = in.readLine();
-
-		String query = "SELECT P.seats - F.num_sold FROM Flight F, FlightInfo FI, Plane P WHERE (F.fnum = FI.flight_id) AND (FI.plane_id = P.id) AND fnum = " + fnum + ";";
-		//System.out.print("Number of remaining seats: ");
-		result = esql.executeQueryAndReturnResult(query);
-		/*for (int i = 0; i < result.size(); i++){
-			for (int j = 0; j < result.get(i).size(); j++){
-				System.out.print(result.get(i).get(j));
-			}
-			System.out.println();
-		}*/
-		//return result;
-		return new ArrayList<List<String>>();
 	}
 
-	public static List<List<String>> ListsTotalNumberOfRepairsPerPlane() throws SQLException {//7
-		/*List<List<String>> result  = new ArrayList<List<String>>();
+	public static List<List<String>> ListsTotalNumberOfRepairsPerPlane() {//7
+		List<List<String>> result  = new ArrayList<List<String>>();
 		// Count number of repairs per planes and list them in descending order
 		String query = "SELECT count(*) as \"# Repairs\", plane_id as \"Plane ID#\" FROM repairs group by \"Plane ID#\" ORDER BY \"# Repairs\" DESC";
-		result = esql.executeQueryAndReturnResult(query);
-		return result;*/
-		return new ArrayList<List<String>>();
-
+		try{
+			result = esql.executeQueryAndReturnResult(query);
+			return result;
+		}catch(SQLException se){
+			System.out.println("Failed.");
+			return result;
+		}catch(Exception e){
+			System.out.println("Failed.");
+			return result;
+		}
 	}
 
-	public static List<List<String>> ListTotalNumberOfRepairsPerYear() throws SQLException{//8
-		/*List<List<String>> result  = new ArrayList<List<String>>();
+	public static List<List<String>> ListTotalNumberOfRepairsPerYear() {//8
+		List<List<String>> result  = new ArrayList<List<String>>();
 		// Count repairs per year and list them in ascending order
 		String query = "SELECT count(*) as \"# Repairs\", extract(year from repair_date) as \"Year\" FROM repairs GROUP BY \"Year\" ORDER BY \"# Repairs\" ASC;";
-		result = esql.executeQueryAndReturnResult(query);
-		return result;*/
-		return new ArrayList<List<String>>();
-
+		try{
+			result = esql.executeQueryAndReturnResult(query);
+			return result;
+		}catch(SQLException se){
+			System.out.println("Failed.");
+			return result;
+		}catch(Exception e){
+			System.out.println("Failed.");
+			return result;
+		}
 	}
 	
-	public static List<List<String>> FindPassengersCountWithStatus(String input) throws SQLException, IOException{//9
-		/*List<List<String>> result  = new ArrayList<List<String>>();
-		// Find how many passengers there are with a status (i.e. W,C,R) and list that number.
-		System.out.print("Enter a flight number: ");
-		String fnum = in.readLine();
-		List<List<String>> flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
-		int flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
-		
-		//make sure flight number exists
-		while(flyCheck == 0){
-			System.out.print("Sorry, that flight cannot be found. Please enter a valid flight number: ");
-			fnum = in.readLine();
-			flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
-			
-			flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
-			//System.out.println(flyCheck);
-		}
-		System.out.print("Enter a status(R, W, C): ");
-		String status = in.readLine();
-		
-		//check to see if status valid
-		String temp = status.toUpperCase();
-		while ( !temp.equals("W") & !temp.equals("R") & !temp.equals("C")){
-			System.out.print("Invalid status entered. Enter a  valid status(R, W, C): ");
-			temp = in.readLine();
-			temp = temp.toUpperCase();
-		}
-		String query = "SELECT count(*) as \"# Customers with Status\" FROM reservation R WHERE R.fid = " + fnum + " AND R.status = \'" + status.toUpperCase() + "\';";
-		result = esql.executeQueryAndReturnResult(query);
-		
-		return result;*/
-		return new ArrayList<List<String>>();
+	public static List<List<String>> FindPassengersCountWithStatus(String input){//9
+		List<List<String>> result  = new ArrayList<List<String>>();
 
+		String query = "SELECT count(*) as \"# Customers with Status\" FROM reservation R WHERE R.fid = 10 AND R.status = \'" + input.toUpperCase() + "\';";
+		
+		try{
+			result = esql.executeQueryAndReturnResult(query);
+			return result;
+		}catch(SQLException se){
+			System.out.println("Failed.");
+			return result;
+		}catch(Exception e){
+			System.out.println("Failed.");
+			return result;
+		}
 	}
 }

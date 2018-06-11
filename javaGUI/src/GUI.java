@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import java.util.*;
 /**
  *
  * @author jake
@@ -598,19 +598,17 @@ public class GUI extends javax.swing.JFrame {
         params[1] = jTextField7.getText();
         params[1] = jTextField8.getText();
         String result = DBproject.AddPilot(params);
-        Popup temp = new Popup(result);
-        temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        temp.setVisible(true);
+        Popup temp2 = new Popup(result);
+        temp2.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        temp2.setVisible(true);
     }                                        
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) { //5                                   
         // TODO add your handling code here:
-        String[] params = new String[4];
-        params[0] = jTextField11.getText();
-        params[1] = jTextField12.getText();
-        params[2] = jTextField13.getText();
-        params[3] = jTextField14.getText();
-        String result = DBproject.AddPlane(params);
+        String[] params = new String[2];
+        params[0] = jTextField9.getText();
+        params[1] = jTextField10.getText();
+        String result = DBproject.BookFlight(params);
         Popup temp = new Popup(result);
         temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         temp.setVisible(true);
@@ -618,26 +616,86 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) { //3                                    
         // TODO add your handling code here:
+        String[] params = new String[4];
+        params[0] = jTextField11.getText();
+        params[1] = jTextField12.getText();
+        params[2] = jTextField13.getText();
+        params[3] = jTextField14.getText();
+        String result = DBproject.AddFlight(params);
+        Popup temp = new Popup(result);
+        temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        temp.setVisible(true);
     }              
     
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) { //4                                        
         // TODO add your handling code here:
+        String[] params = new String[2];
+        params[0] = jTextField15.getText();
+        params[1] = jTextField16.getText();
+        String result = DBproject.AddTechnician(params);
+        Popup temp = new Popup(result);
+        temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        temp.setVisible(true);
     }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) { //6                                    
         // TODO add your handling code here:
+        List<List<String>> input = DBproject.ListNumberOfAvailableSeats();
+        String output = "";
+        for(int i = 0; i < input.size(); i++){
+            for (int j = 0; j < input.get(i).size(); j++){
+                output += input.get(i).get(j) + "\t\t";
+            }
+            output += "\n";
+        }
+        Popup temp = new Popup(output);
+        temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        temp.setVisible(true);
     }
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {  //7                                      
         // TODO add your handling code here:
+        List<List<String>> input = DBproject.ListsTotalNumberOfRepairsPerPlane();
+        String output = "";
+        for(int i = 0; i < input.size(); i++){
+            for (int j = 0; j < input.get(i).size(); j++){
+                output += input.get(i).get(j) + "\t\t";
+            }
+            output += "\n";
+        }
+        Popup temp = new Popup(output);
+        temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        temp.setVisible(true);
     }                                       
     
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) { //8                                     
         // TODO add your handling code here:
+        List<List<String>> input = DBproject.ListTotalNumberOfRepairsPerYear();
+        String output = "";
+        for(int i = 0; i < input.size(); i++){
+            for (int j = 0; j < input.get(i).size(); j++){
+                output += input.get(i).get(j) + "\t\t";
+            }
+            output += "\n";
+        }
+        Popup temp = new Popup(output);
+        temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        temp.setVisible(true);
     }     
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {    //9                                     
         // TODO add your handling code here:
+        List<List<String>> input = DBproject.FindPassengersCountWithStatus(jTextField17.getText());
+        String output = "";
+        for(int i = 0; i < input.size(); i++){
+            for (int j = 0; j < input.get(i).size(); j++){
+                output += input.get(i).get(j) + "\t\t";
+            }
+            output += "\n";
+        }
+        Popup temp = new Popup(output);
+        temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        temp.setVisible(true);
     }                                    
 
     /**

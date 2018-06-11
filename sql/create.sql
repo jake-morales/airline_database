@@ -218,3 +218,11 @@ COPY Schedule (
 )
 FROM 'schedule.csv'
 WITH DELIMITER ',';
+
+CREATE INDEX index1
+ON Repairs
+USING BTREE(plane_id);
+
+CREATE INDEX index2
+ON Repairs
+USING BTREE(repair_date);
