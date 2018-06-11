@@ -127,21 +127,9 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("Make");
 
         jLabel4.setText("Model");
-
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Age");
 
@@ -216,12 +204,6 @@ public class GUI extends javax.swing.JFrame {
 
         jLabel9.setText("Fullname");
 
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
-            }
-        });
-
         jLabel10.setText("Nationality");
 
         jButton2.setText("Insert");
@@ -284,18 +266,6 @@ public class GUI extends javax.swing.JFrame {
         jLabel14.setText("Add Flight");
 
         jLabel15.setText("FIID");
-
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
-            }
-        });
-
-        jTextField13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField13ActionPerformed(evt);
-            }
-        });
 
         jLabel16.setText("Flight ID");
 
@@ -413,12 +383,6 @@ public class GUI extends javax.swing.JFrame {
         jTabbedPane1.addTab("#4", jPanel4);
 
         jLabel11.setText("Book Flight");
-
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
-            }
-        });
 
         jLabel12.setText("Customer ID");
 
