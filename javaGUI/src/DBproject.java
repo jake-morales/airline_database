@@ -268,8 +268,10 @@ public class DBproject{
 		try{
 			esql.executeUpdate(query);
 			return "Success...!";
+		}catch(SQLException se){
+			return "Failed.." + se.getMessage();
 		}catch(Exception e){
-			return e.getMessage() + "Error!";
+			return "Failed.." + e.getMessage();
 		}
 	}
 
@@ -280,8 +282,10 @@ public class DBproject{
 		try{
 			esql.executeUpdate(query);
 			return "Success...!";
+		}catch(SQLException se){
+			return "Failed.." + se.getMessage();
 		}catch(Exception e){
-			return e.getMessage() + "Error!";
+			return "Failed.." + e.getMessage();
 		}
 	}
 
