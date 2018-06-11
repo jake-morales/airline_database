@@ -444,7 +444,7 @@ public class DBproject{
 			List<List<String>> numSold = esql.executeQueryAndReturnResult("select num_sold from Flight F where F.fnum = " + fnum + ";");
 			int numSoldInt = Integer.parseInt(numSold.get(0).get(0));
 			numSoldInt++;
-			System.out.println(numSoldInt);
+			//System.out.println(numSoldInt);
 			
 			esql.executeUpdate("UPDATE flight SET num_sold = " + numSoldInt + " WHERE fnum = " + fnum + ";");
 			
@@ -452,8 +452,8 @@ public class DBproject{
 		}
 	}
 
-	public static List<List<String>> ListNumberOfAvailableSeats(DBproject esql) throws SQLException, IOException{//6
-		List<List<String>> result  = new ArrayList<List<String>>();
+	public static void ListNumberOfAvailableSeats(DBproject esql) throws SQLException, IOException{//6
+		//List<List<String>> result  = new ArrayList<List<String>>();
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
 		System.out.println("Enter a flight number: ");
 		String fnum = in.readLine();
@@ -473,35 +473,35 @@ public class DBproject{
 		//String date = in.readLine();
 
 		String query = "SELECT P.seats - F.num_sold FROM Flight F, FlightInfo FI, Plane P WHERE (F.fnum = FI.flight_id) AND (FI.plane_id = P.id) AND fnum = " + fnum + ";";
-		//System.out.print("Number of remaining seats: ");
-		result = esql.executeQueryAndReturnResult(query);
+		System.out.print("Number of remaining seats: ");
+		esql.executeQueryAndPrintResult(query);
 		/*for (int i = 0; i < result.size(); i++){
 			for (int j = 0; j < result.get(i).size(); j++){
 				System.out.print(result.get(i).get(j));
 			}
 			System.out.println();
 		}*/
-		return result;
+		//return result;
 	}
 
-	public static List<List<String>> ListsTotalNumberOfRepairsPerPlane(DBproject esql) throws SQLException {//7
-		List<List<String>> result  = new ArrayList<List<String>>();
+	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) throws SQLException {//7
+		//List<List<String>> result  = new ArrayList<List<String>>();
 		// Count number of repairs per planes and list them in descending order
 		String query = "SELECT count(*) as \"# Repairs\", plane_id as \"Plane ID#\" FROM repairs group by \"Plane ID#\" ORDER BY \"# Repairs\" DESC";
-		result = esql.executeQueryAndReturnResult(query);
-		return result;
+		esql.executeQueryAndPrintResult(query);
+		//return result;
 	}
 
-	public static List<List<String>> ListTotalNumberOfRepairsPerYear(DBproject esql) throws SQLException{//8
-		List<List<String>> result  = new ArrayList<List<String>>();
+	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) throws SQLException{//8
+		//List<List<String>> result  = new ArrayList<List<String>>();
 		// Count repairs per year and list them in ascending order
 		String query = "SELECT count(*) as \"# Repairs\", extract(year from repair_date) as \"Year\" FROM repairs GROUP BY \"Year\" ORDER BY \"# Repairs\" ASC;";
-		result = esql.executeQueryAndReturnResult(query);
-		return result;
+		esql.executeQueryAndPrintResult(query);
+		//return result;
 	}
 	
-	public static List<List<String>> FindPassengersCountWithStatus(DBproject esql) throws SQLException, IOException{//9
-		List<List<String>> result  = new ArrayList<List<String>>();
+	public static void FindPassengersCountWithStatus(DBproject esql) throws SQLException, IOException{//9
+		//List<List<String>> result  = new ArrayList<List<String>>();
 		// Find how many passengers there are with a status (i.e. W,C,R) and list that number.
 		System.out.print("Enter a flight number: ");
 		String fnum = in.readLine();
@@ -528,8 +528,8 @@ public class DBproject{
 			temp = temp.toUpperCase();
 		}
 		String query = "SELECT count(*) as \"# Customers with Status\" FROM reservation R WHERE R.fid = " + fnum + " AND R.status = \'" + status.toUpperCase() + "\';";
-		result = esql.executeQueryAndReturnResult(query);
+		esql.executeQueryAndPrintResult(query);
 		
-		return result;
+		//return result;
 	}
 }
