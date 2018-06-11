@@ -19,6 +19,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.io.File;
 import java.io.FileReader;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -35,6 +37,7 @@ public class DBproject{
 	//reference to physical database connection
 	private Connection _connection = null;
 	static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	private static DBproject esql;
 	
 	public DBproject(String dbname, String dbport, String user, String passwd) throws SQLException {
 		System.out.print("Connecting to database...");
@@ -220,13 +223,11 @@ public class DBproject{
 		            " <dbname> <port> <user>");
 			return;
 		}//end if
-		System.out.println("got out far");
 		
-		airlineUI dbUI = new airlineUI();
+		GUI dbUI = new GUI();
 		dbUI.setVisible(true);
-		System.out.println("got way far");
 
-		DBproject esql = null;
+		esql = null;
 		
 		try{
 			System.out.println("(1)");
@@ -247,7 +248,8 @@ public class DBproject{
 			
 			esql = new DBproject (dbname, dbport, user, "");
 			
-			boolean keepon = true;
+			
+			/*boolean keepon = true;
 			while(keepon){
 				System.out.println("MAIN MENU");
 				System.out.println("---------");
@@ -263,34 +265,29 @@ public class DBproject{
 				System.out.println("10. < EXIT");
 				
 				switch (readChoice()){
-					case 1: AddPlane(esql); break;
-					case 2: AddPilot(esql); break;
-					case 3: AddFlight(esql); break;
-					case 4: AddTechnician(esql); break;
-					case 5: BookFlight(esql); break;
-					case 6: ListNumberOfAvailableSeats(esql); break;
-					case 7: ListsTotalNumberOfRepairsPerPlane(esql); break;
-					case 8: ListTotalNumberOfRepairsPerYear(esql); break;
-					case 9: FindPassengersCountWithStatus(esql); break;
+					case 1: AddPlane(); break;
+					case 2: AddPilot(); break;
+					case 3: AddFlight(); break;
+					case 4: AddTechnician(); break;
+					case 5: BookFlight(); break;
+					case 6: ListNumberOfAvailableSeats(); break;
+					case 7: ListsTotalNumberOfRepairsPerPlane(); break;
+					case 8: ListTotalNumberOfRepairsPerYear(); break;
+					case 9: FindPassengersCountWithStatus(); break;
 					case 10: keepon = false; break;
 				}
-			}
+			}*/
 		}catch(Exception e){
 			System.err.println (e.getMessage ());
 		}finally{
-			try{
-				if(esql != null) {
-					System.out.print("Disconnecting from database...");
-					esql.cleanup ();
-					System.out.println("Done\n\nBye !");
-				}//end if				
-			}catch(Exception e){
-				// ignored.
-			}
+			// need to figure out how to cleanup
+			//System.out.println("almost end");
 		}
-	}
+		//System.out.println("end");
 
-	public static int readChoice() {
+}
+
+	/*public static int readChoice() {
 		int input;
 		// returns only if a correct value is given.
 		do {
@@ -304,59 +301,55 @@ public class DBproject{
 			}//end try
 		}while (true);
 		return input;
-	}//end readChoice
+	}//end readChoice*/
 
-	public static void AddPlane(DBproject esql) throws IOException {//1
+	public static void AddPlane(String[] input) {//1
+		String query = "INSERT INTO plane(id, make, model, age, seats) VALUES (" + input[0] + ", "
+																				+ "'" + input[1] + "', "
+																				+ "'" + input[2] + "', "
+																				+ "'" + input[3] + "', "
+																				+ input[4] + ");";
 		try{
-			String input = new String("INSERT INTO plane(id, make, model, age, seats) VALUES (");
-			System.out.print("Enter a plane id: ");
-			input += in.readLine() + ", ";
-			System.out.print("Enter a make: ");
-			input += in.readLine() + ", ";
-			System.out.print("Enter a model: ");
-			input += in.readLine() + ", ";
-			System.out.print("Enter age: ");
-			input += in.readLine() + ", ";
-			System.out.print("Enter number of seats: ");
-			input += in.readLine() + ");";
-			esql.executeQueryAndPrintResult(input);
+			esql.executeUpdate(query);
+			System.out.println("Success...!");
+
 		}
 		catch(Exception e){
-			System.out.println(e.getMessage());
-		}		
+			System.out.println("Failed");
+		}
 	}
 
-	public static void AddPilot(DBproject esql) {//2
+	public static void AddPilot() {//2
 	}
 
-	public static void AddFlight(DBproject esql) {//3
+	public static void AddFlight() {//3
 		// Given a pilot, plane and flight, adds a flight in the DB
 	}
 
-	public static void AddTechnician(DBproject esql) {//4
+	public static void AddTechnician( ) {//4
 	}
 
-	public static void BookFlight(DBproject esql) {//5
+	public static void BookFlight( ) {//5
 		// Given a customer and a flight that he/she wants to book, add a reservation to the DB
 	}
 
-	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
+	public static void ListNumberOfAvailableSeats( ) {//6
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
 	}
 
-	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) throws SQLException {//7
+	public static void ListsTotalNumberOfRepairsPerPlane( ) throws SQLException {//7
 		// Count number of repairs per planes and list them in descending order
-		String query = "SELECT count(*) as \"# Repairs\", plane_id as \"Plane ID#\" FROM repairs group by \"Plane ID#\" ORDER BY \"# Repairs\" DESC";
-		esql.executeQueryAndPrintResult(query);
+		//String query = "SELECT count(*) as \"# Repairs\", plane_id as \"Plane ID#\" FROM repairs group by \"Plane ID#\" ORDER BY \"# Repairs\" DESC";
+		//esql.executeQueryAndPrintResult(query);
 	}
 
-	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) throws SQLException {//8
+	public static void ListTotalNumberOfRepairsPerYear( ) throws SQLException {//8
 		// Count repairs per year and list them in ascending order
-		String query = "SELECT count(*) as \"# Repairs\", extract(year from repair_date) as \"Year\" FROM repairs GROUP BY \"Year\" ORDER BY \"# Repairs\" ASC;";
-		esql.executeQueryAndPrintResult(query);
+		//String query = "SELECT count(*) as \"# Repairs\", extract(year from repair_date) as \"Year\" FROM repairs GROUP BY \"Year\" ORDER BY \"# Repairs\" ASC;";
+		//esql.executeQueryAndPrintResult(query);
 	}
 	
-	public static void FindPassengersCountWithStatus(DBproject esql) {//9
+	public static void FindPassengersCountWithStatus( ) {//9
 		// Find how many passengers there are with a status (i.e. W,C,R) and list that number.
 	}
 }
