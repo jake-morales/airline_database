@@ -1,7 +1,7 @@
 #! /bin/bash
-DBNAME=$1
-PORT=$2
-USER=$3
+DBNAME="$USER"_DB
+PORT=$PGPORT
+USER=$USER
 
 # Example: source ./run.sh jake_DB 9999 jake
 java -cp lib/*:bin/ DBproject $DBNAME $PORT $USER
