@@ -475,12 +475,12 @@ public class DBproject{
 		String query = "SELECT P.seats - F.num_sold FROM Flight F, FlightInfo FI, Plane P WHERE (F.fnum = FI.flight_id) AND (FI.plane_id = P.id) AND fnum = " + fnum + ";";
 		//System.out.print("Number of remaining seats: ");
 		result = esql.executeQueryAndReturnResult(query);
-		for (int i = 0; i < result.size(); i++){
+		/*for (int i = 0; i < result.size(); i++){
 			for (int j = 0; j < result.get(i).size(); j++){
 				System.out.print(result.get(i).get(j));
 			}
 			System.out.println();
-		}
+		}*/
 		return result;
 	}
 
