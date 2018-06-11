@@ -260,37 +260,29 @@ public class DBproject{
 	}
 
 	public static String AddPlane(String[] input){//1
-		/*String[] prompt = new String[]{"Enter plane id: ", "make: ", "model: ", "age: ", "seats: "};
-		String[] input = new String[prompt.length];
-		for (int i = 0; i < prompt.length; i++){
-			System.out.print(prompt[i]);
-			input[i] = in.readLine();
-		}
-
 		String query = "INSERT INTO plane(id, make, model, age, seats) VALUES (" + input[0] + ", "
 																					+ "'" + input[1] + "', "
 																					+ "'" + input[2] + "', "
 																					+ "'" + input[3] + "', "
 																					+ input[4] + ");";
-		esql.executeUpdate(query);
-		System.out.println("Success...!");*/
-		return "";
+		try{
+			esql.executeUpdate(query);
+			return "Success...!";
+		}catch(Exception e){
+			return e.getMessage() + "Error!";
+		}
 	}
 
-	public static String AddPilot(String[] input) throws SQLException, IOException{//2
-		/*String[] prompt = new String[]{"Enter pilot id: ", "fullname: ", "nationality: "};
-		String[] input = new String[prompt.length];
-		for (int i = 0; i < prompt.length; i++){
-			System.out.print(prompt[i]);
-			input[i] = in.readLine();
-		}
-
+	public static String AddPilot(String[] input) {//2
 		String query = "INSERT INTO pilot(id, fullname, nationality) VALUES (" + input[0] + ", "
 																					+ "'" + input[1] + "', "
 																					+ "'" + input[2] + "');";
-		esql.executeUpdate(query);
-		System.out.println("Success...!");*/
-		return "";
+		try{
+			esql.executeUpdate(query);
+			return "Success...!";
+		}catch(Exception e){
+			return e.getMessage() + "Error!";
+		}
 	}
 
 	public static String AddFlight(String[] input) throws SQLException, IOException {//3

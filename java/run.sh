@@ -1,5 +1,5 @@
 #! /bin/bash
-DBNAME=$DB
+DBNAME="$USER"_DB
 PORT=$PGPORT
 USER=$USER
 

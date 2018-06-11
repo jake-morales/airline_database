@@ -593,10 +593,27 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {       //2                                  
         // TODO add your handling code here:
+        String[] params = new String[3];
+        params[0] = jTextField6.getText();
+        params[1] = jTextField7.getText();
+        params[1] = jTextField8.getText();
+        String result = DBproject.AddPilot(params);
+        Popup temp = new Popup(result);
+        temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        temp.setVisible(true);
     }                                        
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) { //5                                   
         // TODO add your handling code here:
+        String[] params = new String[4];
+        params[0] = jTextField11.getText();
+        params[1] = jTextField12.getText();
+        params[2] = jTextField13.getText();
+        params[3] = jTextField14.getText();
+        String result = DBproject.AddPlane(params);
+        Popup temp = new Popup(result);
+        temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        temp.setVisible(true);
     }                                        
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) { //3                                    
