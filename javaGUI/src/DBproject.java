@@ -267,7 +267,7 @@ public class DBproject{
 																					+ input[4] + ");";
 		try{
 			esql.executeUpdate(query);
-			return "Success...!";
+			return new String("Success...!");
 		}catch(SQLException se){
 			return "Failed.." + se.getMessage();
 		}catch(Exception e){
@@ -289,36 +289,33 @@ public class DBproject{
 		}
 	}
 
-	public static String AddFlight(String[] input) throws SQLException, IOException {//3
+	public static String AddFlight(String[] input) {//3
 		// Given a pilot, plane and flight, adds a flight in the DB -- details of fligth also?
-		/*String[] prompt = new String[]{"Enter fiid: ", "flight_id: ", "pilot_id: ", "plane_id: "};
-		String[] input = new String[prompt.length];
-		for (int i = 0; i < prompt.length; i++){
-			System.out.print(prompt[i]);
-			input[i] = in.readLine();
-		}
-
 		String query = "INSERT INTO FlightInfo(fiid, flight_id, pilot_id, plane_id) VALUES (" + input[0] + ", "
 																					+ input[1] + ", "
 																					+ input[2] + ", "
 																					+ input[3] + ");";
-		esql.executeUpdate(query);
-		System.out.println("Success...!");*/
-		return "";
+		try{
+			esql.executeUpdate(query);
+			return "Success...!";
+		}catch(SQLException se){
+			return "Failed.." + se.getMessage();
+		}catch(Exception e){
+			return "Failed.." + e.getMessage();
+		}
 	}
 
-	public static String AddTechnician(String[] input) throws SQLException,IOException{//4
-		/*String[] prompt = new String[]{"Enter technician id: ", "full_name: "};
-		String[] input = new String[prompt.length];
-		for (int i = 0; i < prompt.length; i++){
-			System.out.print(prompt[i]);
-			input[i] = in.readLine();
-		}
-
+	public static String AddTechnician(String[] input) {//4
+		
 		String query = "INSERT INTO technician(id, full_name) VALUES (" + input[0] + ", " + "'" + input[1] + "');";
-		esql.executeUpdate(query);
-		System.out.println("Success...!");*/
-		return "";
+		try{
+			esql.executeUpdate(query);
+			return "Success...!";
+		}catch(SQLException se){
+			return "Failed.." + se.getMessage();
+		}catch(Exception e){
+			return "Failed.." + e.getMessage();
+		}
 	}
 
 	public static String BookFlight(String[] input) throws SQLException, IOException {//5

@@ -1,0 +1,21 @@
+Jake Morales
+861177648
+
+Gabriel Barreras
+
+
+CS 166 - Databases
+Project Phase 3
+6/10/18
+
+***** NOTES *******
+- We have two versions of our application in /java and /javaGUI.
+
+* /java
+    - 
+
+* /javaGUI
+    - This version implements a GUI intrerface.
+    - To run: --> cd airline_database/java --> ./compile.sh --> ./run.sh
+        -If it doesn't work, try running it manually with: --> java -cp lib/*:bin/ DBproject <DBname> <Port#> <User>
+    - 
