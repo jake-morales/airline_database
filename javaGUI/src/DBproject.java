@@ -303,7 +303,7 @@ public class DBproject{
 		return input;
 	}//end readChoice*/
 
-	public static void AddPlane(String[] input) {//1
+	public static String AddPlane(String[] input) {//1
 		String query = "INSERT INTO plane(id, make, model, age, seats) VALUES (" + input[0] + ", "
 																				+ "'" + input[1] + "', "
 																				+ "'" + input[2] + "', "
@@ -311,11 +311,11 @@ public class DBproject{
 																				+ input[4] + ");";
 		try{
 			esql.executeUpdate(query);
-			System.out.println("Success...!");
+			return new String("Success...!");
 
 		}
 		catch(Exception e){
-			System.out.println("Failed");
+			return new String("Failed :(");
 		}
 	}
 

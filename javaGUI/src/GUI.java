@@ -307,8 +307,20 @@ public class GUI extends javax.swing.JFrame {
         params[2] = jTextField3.getText();
         params[3] = jTextField4.getText();
         params[4] = jTextField5.getText();
-        DBproject.AddPlane(params);
-    }                                        
+        String result = DBproject.AddPlane(params);
+        Popup temp = new Popup(result);
+        temp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        temp.setVisible(true);
+    }                         
+    
+    /*String output = "";
+        for(int i = 0; i < input.length; i++){
+            for (int j = 0; j < input[i].length; j++){
+                output += input[i][j] + "\t\t";
+            }
+            output += "\n";
+        }
+        jTextArea1.setText(output);*/
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
