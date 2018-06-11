@@ -226,3 +226,7 @@ USING BTREE(plane_id);
 CREATE INDEX index2
 ON Repairs
 USING BTREE(repair_date);
+
+CREATE INDEX index3
+ON Reservation
+USING BTREE(status);

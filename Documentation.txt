@@ -12,9 +12,18 @@ Project Phase 3
 - We have two versions of our application in /java and /javaGUI.
 
 * /java
-    - 
+    - This version implements error checking.
+    - It checks the sanity of the input, making sure the data makes sense.
 
 * /javaGUI
     - This version implements a GUI intrerface.
     - To run: --> cd airline_database/java --> ./compile.sh --> ./run.sh
         -If it doesn't work, try running it manually with: --> java -cp lib/*:bin/ DBproject <DBname> <Port#> <User>
+    - This version does not implement error checking.
+    - However, it does provide a user friendly interface.
+
+- INDEXES
+    - We added two indexes on Repairs: (1) a BTREE on repair_date and (2) a BTREE on planeID
+    - These BTREEs should improve performance for the queries that List and Sort number of repairs for example.
+    - This is because, the data is already sorted, so there is less random access.
+    - We also made an index on Reservation on status. This will help for counting the number of customers with a certain status.
