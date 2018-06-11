@@ -97,7 +97,7 @@ public class DBproject{
 		int rowCount = 0;
 		
 		//iterates through the result set and output them to standard out.
-		boolean outputHeader = true;
+		boolean outputHeader = false;
 		while (rs.next()){
 			if(outputHeader){
 				for(int i = 1; i <= numCol; i++){
@@ -455,7 +455,7 @@ public class DBproject{
 	public static void ListNumberOfAvailableSeats(DBproject esql) throws SQLException, IOException{//6
 		//List<List<String>> result  = new ArrayList<List<String>>();
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
-		System.out.println("Enter a flight number: ");
+		System.out.print("Enter a flight number: ");
 		String fnum = in.readLine();
 		List<List<String>> flightCheck = esql.executeQueryAndReturnResult("select count(*) from Flight F where F.fnum = " + fnum + ";");
 		int flyCheck = Integer.parseInt(flightCheck.get(0).get(0));
@@ -487,6 +487,7 @@ public class DBproject{
 	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) throws SQLException {//7
 		//List<List<String>> result  = new ArrayList<List<String>>();
 		// Count number of repairs per planes and list them in descending order
+		System.out.println("Number of repairs || Plane ID");
 		String query = "SELECT count(*) as \"# Repairs\", plane_id as \"Plane ID#\" FROM repairs group by \"Plane ID#\" ORDER BY \"# Repairs\" DESC";
 		esql.executeQueryAndPrintResult(query);
 		//return result;
@@ -495,6 +496,7 @@ public class DBproject{
 	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) throws SQLException{//8
 		//List<List<String>> result  = new ArrayList<List<String>>();
 		// Count repairs per year and list them in ascending order
+		System.out.println("Number of repairs || Year");
 		String query = "SELECT count(*) as \"# Repairs\", extract(year from repair_date) as \"Year\" FROM repairs GROUP BY \"Year\" ORDER BY \"# Repairs\" ASC;";
 		esql.executeQueryAndPrintResult(query);
 		//return result;
@@ -527,6 +529,7 @@ public class DBproject{
 			temp = in.readLine();
 			temp = temp.toUpperCase();
 		}
+		System.out.print("Number of records found: ");
 		String query = "SELECT count(*) as \"# Customers with Status\" FROM reservation R WHERE R.fid = " + fnum + " AND R.status = \'" + status.toUpperCase() + "\';";
 		esql.executeQueryAndPrintResult(query);
 		

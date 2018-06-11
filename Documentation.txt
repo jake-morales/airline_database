@@ -2,6 +2,7 @@ Jake Morales
 861177648
 
 Gabriel Barreras
+861116279
 
 
 CS 166 - Databases
@@ -13,12 +14,12 @@ Project Phase 3
 
 * /java
     - This version implements error checking.
+    - To run: --> ./compile.sh --> ./run.sh <DBname> $PGPORT <User>
     - It checks the sanity of the input, making sure the data makes sense.
 
 * /javaGUI
     - This version implements a GUI intrerface.
-    - To run: --> cd airline_database/java --> ./compile.sh --> ./run.sh
-        -If it doesn't work, try running it manually with: --> java -cp lib/*:bin/ DBproject <DBname> <Port#> <User>
+    - To run: --> cd airline_database/java --> ./compile.sh --> ./run.sh <DBname> $PGPORT <User>
     - This version does not implement error checking.
     - However, it does provide a user friendly interface.
 
@@ -27,3 +28,59 @@ Project Phase 3
     - These BTREEs should improve performance for the queries that List and Sort number of repairs for example.
     - This is because, the data is already sorted, so there is less random access.
     - We also made an index on Reservation on status. This will help for counting the number of customers with a certain status.
+
+- Division of Work
+    - Jake worked on the first 5 functionalities. He also worked on the GUI, and implementing the indexes.
+    - Gabriel worked on the rest of the functionalities. He also worked on error checking for all the options.
+
+This project implements the following functionalities:
+
+1) Add Plane:
+This option will add a plane to the database, and requires the plane's id(int), 
+make(string), model(string), age(int), and number of seats (int) as input.
+
+2) Add Pilot
+This option will add a pilot to the database, and requires the pilot's id(int), 
+full name(string), and nationality(string) as input.
+
+3)Add Flight
+This option will add a flights information to the database, and requires the flight's 
+flight info id(int), flight id(int), pilot id(int), and plane id (int) as input. Failure to 
+reference already existing flight/pilot/or plane will result in failure and closure.
+
+4) Add Technician
+This option will add a technician to the database, and requires the technician's id(int) and 
+full name(string) as input.
+
+5) Book Flight.
+This method will ask for a customer's id number and a flight number they are inquiring
+about. It will ensure that both the id and flight number are valid before looking up the 
+number of seats left on the flight in question. If seats are available, the method will add
+the customer to the reservation table and update the number of seats sold. If seats are 
+unavailable, will ask if the customer would like to be waitlisted. If yes, the customer will 
+be added to the reservation table with a waitlist status.
+
+6)List Number of available seats.
+Given a flight number, the method will verify that the flight already exists, or ask for a 
+valid number. Once a correct flight number is given, the method will return how many seats 
+are left. (NOTE: this is calculated using num_sold in Flight, which is different than the 
+number of entries in reservation table with an 'R' status).
+
+7)List Total Number of Repairs per Plane
+This method will display two columns, the left being the number of repairs and the right the
+plane's id number. The results will be sorted in descending order.
+
+8)List Number of Repairs by Year
+This method will display two columns. The left column is the number of repairs done in a 
+given year, and the associated year is on the right. These results are done in ascending 
+order.
+
+9)Find Total Number of Passengers With a Given Status
+This method will ask for a flight number from the user, and verify it exists. If an incorrect 
+flight number is given, it will ask until a correct one is recieved. After confirming the
+flight number, the user will be asked which status they would like results for. The user may
+enter either a capital or lowercase 'W', 'R', or 'C'. The method will not proceed with any 
+character besides these three. After confirming the status, the number of records with
+the associated flight number and status will be returned.(NOTE: this is calculated using the 
+number of entries in the Reservation table with an 'R' status, which is different than 
+num_sold in Flight).
