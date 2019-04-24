@@ -1,3 +1,6 @@
 # airline_database
-Databases Final Project
-see Documentation.txt for notes.
+School Project for Databases Course
+
+**see updated version** with *Docker* containers and *docker-compose*
+
+Link: https://github.com/jmora060/AirlineDatabaseApp
